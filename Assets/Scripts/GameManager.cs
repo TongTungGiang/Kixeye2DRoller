@@ -136,27 +136,41 @@ public class GameManager : MonoBehaviour
     #region Private variables
     float nextObstacleSpawn;
     float currentTimeScale = 1.0f;
+    bool isGamePlaying;
     #endregion
 
+    #region UI callbacks
     public void StartGame()
     {
         Time.timeScale = currentTimeScale;
+        isGamePlaying = true;
     }
 
     public void PauseGame()
     {
         Time.timeScale = 0.0f;
+        isGamePlaying = false;
     }
+
+    public void Quit()
+    {
+        Application.Quit();
+    }
+    #endregion
 
     // Use this for initialization
     void Start()
     {
         nextObstacleSpawn = Time.time + obstacleSpawnRate.RandomInsideRate;
+        PauseGame();
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (!isGamePlaying)
+            return;
+
         if (!IsBackFloorInsideCameraView)
         {
             BackFloor.transform.position = ForwardFloor.transform.position + new Vector3(floorStep, 0);

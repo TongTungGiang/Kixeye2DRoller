@@ -38,6 +38,8 @@ public class PlayerController : MonoBehaviour
     bool isDead;
     bool isJumping;
     #endregion
+
+    public bool IsDead { get { return isDead; } }
     
     void Start()
     {
