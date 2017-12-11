@@ -58,6 +58,15 @@ public class GameManager : MonoBehaviour
 
     [SerializeField]
     TimeScaleProgression timeScaleProgression;
+
+    [SerializeField]
+    PlayerController player;
+
+    [SerializeField]
+    GameObject gameHud;
+
+    [SerializeField]
+    GameObject gameOverPopup;
     #endregion
 
     #region Properties
@@ -187,6 +196,13 @@ public class GameManager : MonoBehaviour
 
         currentTimeScale = timeScaleProgression.GetTimeScale(Time.time);
         Time.timeScale = currentTimeScale;
+
+        if (player.IsDead)
+        {
+            gameHud.SetActive(false);
+            gameOverPopup.SetActive(true);
+            isGamePlaying = false;
+        }
     }
 
     /// <summary>

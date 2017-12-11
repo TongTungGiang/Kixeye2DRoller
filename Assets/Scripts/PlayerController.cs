@@ -14,10 +14,10 @@ public class PlayerController : MonoBehaviour
     string floor;
 
     /// <summary>
-    /// Same as above, but for obstacle layer.
+    /// Same as above.
     /// </summary>
     [SerializeField]
-    LayerMask obstacleLayer;
+    string obstacle;
 
     /// <summary>
     /// How high the circle jumps?
@@ -30,6 +30,9 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     [SerializeField]
     float horizontalMoveSpeed;
+
+    [SerializeField]
+    UnityEngine.UI.Text scoreText;
     #endregion
 
     #region Private variables
@@ -37,6 +40,8 @@ public class PlayerController : MonoBehaviour
 
     bool isDead;
     bool isJumping;
+
+    int currentScore;
     #endregion
 
     public bool IsDead { get { return isDead; } }
@@ -47,6 +52,8 @@ public class PlayerController : MonoBehaviour
         isJumping = true;
 
         rb = GetComponent<Rigidbody2D>();
+
+        currentScore = 0;
     }
     
     void Update()
@@ -87,9 +94,15 @@ public class PlayerController : MonoBehaviour
             isJumping = false;
         }
 
-        if (col.gameObject.layer == obstacleLayer)
+        if (col.gameObject.tag == obstacle)
         {
             isDead = true;
         }
+    }
+
+    public void AddScore(int addition)
+    {
+        currentScore += addition;
+        scoreText.text = currentScore.ToString();
     }
 }
