@@ -22,6 +22,21 @@ public class GameManager : MonoBehaviour
 
     [SerializeField]
     Transform mainCamera;
+
+    [SerializeField]
+    MinMaxConfig obstacleSpawnRate;
+
+    [SerializeField]
+    MinMaxConfig obstacleSpawnDistance;
+
+    [SerializeField]
+    MinMaxConfig obstacleVerticalOffset;
+
+    [SerializeField]
+    ObstacleSpawnConfiguration[] obstacles;
+
+    [SerializeField]
+    Transform obstacleSpawnPosition;
     #endregion
 
     #region Properties
@@ -46,6 +61,59 @@ public class GameManager : MonoBehaviour
             return floors[1].transform;
         }
     }
+
+    bool IsBackFloorInsideCameraView
+    {
+        get
+        {
+            float floorSize = floorStep / 2;
+            float maxCameraPosX = BackFloor.transform.position.x + floorSize;
+            float minCameraPosX = BackFloor.transform.position.x - floorSize;
+            float currentCameraPosX = mainCamera.transform.position.x;
+
+            return currentCameraPosX <= maxCameraPosX && currentCameraPosX >= minCameraPosX;
+        }
+    }
+
+    GameObject RandomObstaclePrefab
+    {
+        get
+        {
+            float random = Random.Range(0, ObstaclesTotalWeight);
+            float totalWeightsSoFar = 0;
+            for (int i = 0; i < obstacles.Length; i++)
+            {
+                totalWeightsSoFar += obstacles[i].possibility;
+                if (totalWeightsSoFar >= random)
+                    return obstacles[i].prefab;
+            }
+
+            // Mathematically, this line will never be executed, anyways.
+            return obstacles[0].prefab;
+        }
+    }
+
+    float ObstaclesTotalWeight
+    {
+        get
+        {
+            // not initialized
+            if (_obstacleTotalRandomWeight == -1)
+            {
+                _obstacleTotalRandomWeight = 0;
+                foreach (ObstacleSpawnConfiguration o in obstacles)
+                {
+                    _obstacleTotalRandomWeight += o.possibility;
+                }
+            }
+
+            return _obstacleTotalRandomWeight;
+        }
+    }
+    #endregion
+
+    #region Private variables
+    float nextObstacleSpawn;
     #endregion
 
     public void StartGame()
@@ -61,7 +129,7 @@ public class GameManager : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        
+        nextObstacleSpawn = Time.time + obstacleSpawnRate.RandomInsideRate;
     }
 
     // Update is called once per frame
@@ -71,18 +139,27 @@ public class GameManager : MonoBehaviour
         {
             BackFloor.transform.position = ForwardFloor.transform.position + new Vector3(floorStep, 0);
         }
-    }
 
-    bool IsBackFloorInsideCameraView
-    {
-        get
+        if (Time.time >= nextObstacleSpawn)
         {
-            float floorSize = floorStep / 2;
-            float maxCameraPosX = BackFloor.transform.position.x + floorSize;
-            float minCameraPosX = BackFloor.transform.position.x - floorSize;
-            float currentCameraPosX = mainCamera.transform.position.x;
-
-            return currentCameraPosX <= maxCameraPosX && currentCameraPosX >= minCameraPosX;
+            nextObstacleSpawn = Time.time + obstacleSpawnRate.RandomInsideRate;
+            GameObject obstaclePrefab = RandomObstaclePrefab;
+            Vector3 spawnPos = new Vector3(obstacleSpawnPosition.transform.position.x + obstacleSpawnDistance.RandomInsideRate,
+                ForwardFloor.transform.position.y + obstacleVerticalOffset.RandomInsideRate);
+            GameObject obstacle = obstaclePrefab.Spawn(spawnPos);
         }
     }
+
+    /// <summary>
+    /// Value holder, never meant to use directly.
+    /// </summary>
+    /// <see cref="ObstaclesTotalWeight"/>
+    float _obstacleTotalRandomWeight = -1;
+}
+
+[System.Serializable]
+class ObstacleSpawnConfiguration
+{
+    public GameObject prefab;
+    public float possibility;
 }

@@ -90,6 +90,76 @@ NavMeshSettings:
     cellSize: 0.16666667
     manualCellSize: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &54265466
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 54265467}
+  - 114: {fileID: 54265468}
+  m_Layer: 10
+  m_Name: SingleObstacle
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &54265467
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 54265466}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_Children: []
+  m_Father: {fileID: 522060221}
+  m_RootOrder: 2
+--- !u!114 &54265468
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 54265466}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6258607e94053b545bf079ea5ea53694, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefab: {fileID: 1000013805103882, guid: ade51702b10c7d54489924ce0e2a8c9b, type: 2}
+  initialPoolsize: 10
+--- !u!1 &229711667
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 229711668}
+  m_Layer: 8
+  m_Name: ObstacleSpawnPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &229711668
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 229711667}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 12.2, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_Children: []
+  m_Father: {fileID: 1185681305}
+  m_RootOrder: 1
 --- !u!1 &515162601
 GameObject:
   m_ObjectHideFlags: 0
@@ -122,6 +192,23 @@ MonoBehaviour:
   - {fileID: 547074620}
   floorStep: 20
   mainCamera: {fileID: 1428424241}
+  obstacleSpawnRate:
+    min: 2.5
+    max: 3
+  obstacleSpawnDistance:
+    min: 0
+    max: 7
+  obstacleVerticalOffset:
+    min: -1
+    max: 0
+  obstacles:
+  - prefab: {fileID: 1000013805103882, guid: ade51702b10c7d54489924ce0e2a8c9b, type: 2}
+    possibility: 1
+  - prefab: {fileID: 1000010635266562, guid: dda36736906c648468072f5eb575163a, type: 2}
+    possibility: 0.5
+  - prefab: {fileID: 1000012060817624, guid: dc0201bb42e8fea45b18d5fd0a413332, type: 2}
+    possibility: 0.3
+  obstacleSpawnPosition: {fileID: 229711668}
 --- !u!4 &515162603
 Transform:
   m_ObjectHideFlags: 0
@@ -143,6 +230,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 522060221}
+  - 114: {fileID: 522060222}
   m_Layer: 10
   m_Name: ObjectPools
   m_TagString: Untagged
@@ -160,9 +248,23 @@ Transform:
   m_LocalPosition: {x: 0, y: -4.14, z: 0}
   m_LocalScale: {x: 40, y: 2, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_Children: []
+  m_Children:
+  - {fileID: 1041240390}
+  - {fileID: 1015280025}
+  - {fileID: 54265467}
   m_Father: {fileID: 0}
   m_RootOrder: 4
+--- !u!114 &522060222
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 522060220}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d03b7ccc0b5a23c418836351a64bf278, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &547074620
 GameObject:
   m_ObjectHideFlags: 0
@@ -240,6 +342,90 @@ SpriteRenderer:
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
+--- !u!1 &1015280024
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 1015280025}
+  - 114: {fileID: 1015280026}
+  m_Layer: 10
+  m_Name: TrippleObstacle
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1015280025
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1015280024}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_Children: []
+  m_Father: {fileID: 522060221}
+  m_RootOrder: 1
+--- !u!114 &1015280026
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1015280024}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6258607e94053b545bf079ea5ea53694, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefab: {fileID: 1000012060817624, guid: dc0201bb42e8fea45b18d5fd0a413332, type: 2}
+  initialPoolsize: 10
+--- !u!1 &1041240389
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 1041240390}
+  - 114: {fileID: 1041240391}
+  m_Layer: 10
+  m_Name: DoubleObstacle
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1041240390
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1041240389}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_Children: []
+  m_Father: {fileID: 522060221}
+  m_RootOrder: 0
+--- !u!114 &1041240391
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1041240389}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6258607e94053b545bf079ea5ea53694, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefab: {fileID: 1000010635266562, guid: dda36736906c648468072f5eb575163a, type: 2}
+  initialPoolsize: 10
 --- !u!1 &1185681304
 GameObject:
   m_ObjectHideFlags: 0
@@ -270,6 +456,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 1948559939}
+  - {fileID: 229711668}
   m_Father: {fileID: 0}
   m_RootOrder: 1
 --- !u!114 &1185681306
@@ -287,8 +474,8 @@ MonoBehaviour:
   obstacleLayer:
     serializedVersion: 2
     m_Bits: 512
-  jumpHeight: 10
-  horizontalMoveSpeed: 3
+  jumpHeight: 8
+  horizontalMoveSpeed: 5
 --- !u!50 &1185681307
 Rigidbody2D:
   serializedVersion: 2
@@ -305,7 +492,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 5
 --- !u!58 &1185681308
 CircleCollider2D:
   m_ObjectHideFlags: 0
