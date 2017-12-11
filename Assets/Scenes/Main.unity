@@ -178,6 +178,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 512
   jumpHeight: 10
+  horizontalMoveSpeed: 3
 --- !u!50 &1185681307
 Rigidbody2D:
   serializedVersion: 2
@@ -298,6 +299,7 @@ GameObject:
   - 92: {fileID: 1428424239}
   - 124: {fileID: 1428424238}
   - 81: {fileID: 1428424237}
+  - 114: {fileID: 1428424242}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -373,6 +375,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
+--- !u!114 &1428424242
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1428424236}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4fa1b5b375ab8141b744518c151cb63, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  horizontalOffset: 6
+  player: {fileID: 1185681305}
 --- !u!1 &1948559938
 GameObject:
   m_ObjectHideFlags: 0

@@ -24,6 +24,12 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     [SerializeField]
     float jumpHeight;
+
+    /// <summary>
+    /// How fast the player moves along the floor?
+    /// </summary>
+    [SerializeField]
+    float horizontalMoveSpeed;
     #endregion
 
     #region Private variables
@@ -50,6 +56,17 @@ public class PlayerController : MonoBehaviour
         {
             Jump();
         }
+
+        MoveRight();
+    }
+
+    /// <summary>
+    /// Player moves with a constant velocity along horizontal axis.
+    /// This is not affected by his jumping state.
+    /// </summary>
+    void MoveRight()
+    {
+        transform.position += new Vector3(horizontalMoveSpeed * Time.deltaTime, 0);
     }
 
     void Jump()
