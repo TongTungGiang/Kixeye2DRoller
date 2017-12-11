@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Manages re-usable objects that are spawned by using a common prefab.
+/// </summary>
 public class Pool : MonoBehaviour
 {
     private const string ON_DESPAWN_METHOD = "OnDespawn";

@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Offers access points to current pools in scene.
+/// </summary>
 public class PoolManager : MonoBehaviour
 {
     private static Dictionary<GameObject, Pool> currentPools = new Dictionary<GameObject, Pool>();
