@@ -195,9 +195,9 @@ MonoBehaviour:
   obstacleSpawnRate:
     min: 2.5
     max: 3
-  obstacleSpawnDistance:
+  obstacleHorizontalOffset:
     min: 0
-    max: 7
+    max: 5
   obstacleVerticalOffset:
     min: -1
     max: 0
@@ -209,6 +209,9 @@ MonoBehaviour:
   - prefab: {fileID: 1000012060817624, guid: dc0201bb42e8fea45b18d5fd0a413332, type: 2}
     possibility: 0.3
   obstacleSpawnPosition: {fileID: 229711668}
+  timeScaleProgression:
+    milestones: {x: 30, y: 60}
+    timeScale: {x: 1, y: 1.6}
 --- !u!4 &515162603
 Transform:
   m_ObjectHideFlags: 0

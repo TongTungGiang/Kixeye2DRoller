@@ -20,23 +20,44 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     float floorStep;
 
+    /// <summary>
+    /// Reference to the main camera.
+    /// </summary>
     [SerializeField]
     Transform mainCamera;
 
+    /// <summary>
+    /// How frequently does the GM spawn new obstacle?
+    /// </summary>
     [SerializeField]
     MinMaxConfig obstacleSpawnRate;
 
+    /// <summary>
+    /// How far the obstacle is located from the destined position, horizontally.
+    /// </summary>
     [SerializeField]
-    MinMaxConfig obstacleSpawnDistance;
+    MinMaxConfig obstacleHorizontalOffset;
 
+    /// <summary>
+    /// How far the obstacle is located from the destined position, vertically.
+    /// </summary>
     [SerializeField]
     MinMaxConfig obstacleVerticalOffset;
 
+    /// <summary>
+    /// Obstacle prefabs, and their possibilities.
+    /// </summary>
     [SerializeField]
     ObstacleSpawnConfiguration[] obstacles;
 
+    /// <summary>
+    /// Destined obstacle spawn position, relative to the player (actually it's one of his child transform).
+    /// </summary>
     [SerializeField]
     Transform obstacleSpawnPosition;
+
+    [SerializeField]
+    TimeScaleProgression timeScaleProgression;
     #endregion
 
     #region Properties
@@ -114,11 +135,12 @@ public class GameManager : MonoBehaviour
 
     #region Private variables
     float nextObstacleSpawn;
+    float currentTimeScale = 1.0f;
     #endregion
 
     public void StartGame()
     {
-        Time.timeScale = 1.0f;
+        Time.timeScale = currentTimeScale;
     }
 
     public void PauseGame()
@@ -144,10 +166,13 @@ public class GameManager : MonoBehaviour
         {
             nextObstacleSpawn = Time.time + obstacleSpawnRate.RandomInsideRate;
             GameObject obstaclePrefab = RandomObstaclePrefab;
-            Vector3 spawnPos = new Vector3(obstacleSpawnPosition.transform.position.x + obstacleSpawnDistance.RandomInsideRate,
+            Vector3 spawnPos = new Vector3(obstacleSpawnPosition.transform.position.x + obstacleHorizontalOffset.RandomInsideRate,
                 ForwardFloor.transform.position.y + obstacleVerticalOffset.RandomInsideRate);
             GameObject obstacle = obstaclePrefab.Spawn(spawnPos);
         }
+
+        currentTimeScale = timeScaleProgression.GetTimeScale(Time.time);
+        Time.timeScale = currentTimeScale;
     }
 
     /// <summary>
@@ -162,4 +187,29 @@ class ObstacleSpawnConfiguration
 {
     public GameObject prefab;
     public float possibility;
+}
+
+/// <summary>
+/// When the game time reaches the first value (a.k.a x value), the time scale would gradually increase, 
+/// until the time scale reaches its max value.
+/// </summary>
+[System.Serializable]
+class TimeScaleProgression
+{
+    [SerializeField]
+    Vector2 milestones;
+
+    [SerializeField]
+    Vector2 timeScale;
+
+    public float GetTimeScale(float time)
+    {
+        if (time < milestones.x)
+            return timeScale.x;
+
+        if (time > milestones.y)
+            return timeScale.y;
+
+        return (time - milestones.x) / (milestones.y - milestones.x) * (timeScale.y - timeScale.x) + timeScale.x;
+    }
 }
